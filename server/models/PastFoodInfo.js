@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const FoodInfoSchema = new Schema({
+const PastFoodInfo = new Schema({
   foodName: { type: String, required: true },
   foodStepsArray: [{ type: String, required: true }],
   foodTriviaArray: [{ type: String, required: true }],
@@ -15,4 +15,4 @@ const FoodInfoSchema = new Schema({
   foodNutrient: [{ type: String, required: true }],
 });
 
-module.exports = mongoose.model("FoodInfo", FoodInfoSchema);
+module.exports = mongoose.model("PastFoodInfo", PastFoodInfo);

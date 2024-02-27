@@ -17,6 +17,7 @@ exports.register_food_post = [
   body("foodCalories", "Cannot be empty").isString().trim().notEmpty(),
   body("foodNutrient", "Cannot be empty").isString().trim().notEmpty(),
   body("imgAlt", "Cannot be empty").isString().trim().notEmpty(),
+  body("foodRegion", "Cannot be empty").isString().trim().notEmpty(),
 
   asyncHandler(async (req, res, next) => {
     console.log(validationResult(req));
@@ -47,6 +48,7 @@ exports.register_food_post = [
         foodCalories: req.body.foodCalories,
         foodStepsArray: req.body.foodStepsArray,
         foodTriviaArray: req.body.foodTriviaArray,
+        foodRegion: req.body.foodRegion,
         foodNutrient: foodNutrientArray,
         imgAlt: sanitizedImgAlt,
         date_of_food: DateTime.now(),
@@ -95,6 +97,7 @@ cron.schedule("0 0 * * *", async () => {
           foodStepsArray: currentFood.foodStepsArray,
           foodTriviaArray: currentFood.foodTriviaArray,
           foodNutrient: currentFood.foodNutrientArray,
+          foodRegion: currentFood.foodRegion,
           imgAlt: currentFood.sanitizedImgAlt,
           date_of_food: currentFood.date_of_food,
         });
