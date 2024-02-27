@@ -18,21 +18,52 @@ type NutrientHintProps = {
 
 const NutrientHint = ({ foodData, count, displayMode }: NutrientHintProps) => {
   return (
-    <div className="border-b-2 border-gray-400 w-fit">
+    <div className=" w-fit">
       <h3 className="mb-1 mt-2 md:mt-0 font-light text-sm  text-gray-400">
         Nutrient
       </h3>
       <p
-        className={`blurred-hint duration-300 ${
-          count <= 1
-            ? "blur-sm opacity-0 -translate-x-8"
-            : "blur-none opacity-100 -translate-x-0"
-        }
+        className={`blurred-hint duration-300 
         ${displayMode ? "text-white" : "text-black"}`}
       >
-        Carbs: {foodData.foodNutrient[0]} <br />
-        Fats: {foodData.foodNutrient[1]} <br />
-        Protein: {foodData.foodNutrient[2]} <br />
+        Kcal:{" "}
+        <span
+          className={`${
+            count <= 0 ? " hidden -translate-x-8" : "blur-none  -translate-x-0"
+          }`}
+        >
+          {foodData.foodCalories}{" "}
+        </span>{" "}
+        <br />
+        Carbs:{" "}
+        <span
+          className={`${
+            count <= 0 ? " hidden -translate-x-8" : "blur-none  -translate-x-0"
+          }`}
+        >
+          {foodData.foodNutrient[0]}
+        </span>{" "}
+        <br />
+        Fats:
+        <span
+          className={`${
+            count <= 0 ? " hidden -translate-x-8" : "blur-none  -translate-x-0"
+          }`}
+        >
+          {" "}
+          {foodData.foodNutrient[1]}{" "}
+        </span>
+        <br />
+        Protein:
+        <span
+          className={`${
+            count <= 0 ? " hidden -translate-x-8" : "blur-none  -translate-x-0"
+          }`}
+        >
+          {" "}
+          {foodData.foodNutrient[2]}
+        </span>{" "}
+        <br />
       </p>
     </div>
   );

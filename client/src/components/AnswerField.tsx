@@ -81,7 +81,7 @@ const AnswerField = ({
         setGameState("won");
         setPlayLock(true);
         setAnimationTrigger(true);
-      } else if (count === 5) {
+      } else if (count === 4) {
         setGameState("lost");
         setPlayLock(true);
         setAnimationTrigger(true);
@@ -93,8 +93,6 @@ const AnswerField = ({
         setCount(count + 1);
         setAnimationTrigger(true);
       }
-      console.log(answerCheck);
-      console.log(guess);
       setGuess("");
     }
   }

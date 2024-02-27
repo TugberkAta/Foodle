@@ -26,8 +26,10 @@ const StepsHint = ({ foodData, count, displayMode }: StepsHintProps) => {
         {foodData.foodStepsArray.map((e, index) => (
           <li
             key={index}
-            className={`duration-300 ${
-              count <= 3 ? "blur-sm w-80 mb-2 translate" : "blur-none w-80 mb-2"
+            className={`duration-300 w-80 mb-2 ${
+              count <= 2
+                ? "blur-sm pointer-events-none select-none translate"
+                : "blur-none"
             } ${displayMode ? "text-white" : "text-black"}`}
           >
             {index + 1 + "- " + e}

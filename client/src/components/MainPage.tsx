@@ -3,8 +3,8 @@ import AnswerField from "./AnswerField";
 import PictureHint from "./hintComponents/PictureHint";
 import TriviaHint from "./hintComponents/TriviaHint";
 import StepsHint from "./hintComponents/StepsHint";
-import CaloriesHint from "./hintComponents/CaloriesHint";
 import NutrientHint from "./hintComponents/NutrientHint";
+import ScoreBoard from "./summaryPanel/ScoreBoard";
 
 interface FoodData {
   foodName: string;
@@ -64,27 +64,27 @@ function MainPage({ displayMode }: MainPageProps) {
           <>
             <div className="flex flex-col items-center">
               <PictureHint foodData={foodData} count={count}></PictureHint>
-              <CaloriesHint
-                foodData={foodData}
-                count={count}
-                displayMode={displayMode}
-              ></CaloriesHint>
-              <NutrientHint
-                foodData={foodData}
-                count={count}
-                displayMode={displayMode}
-              ></NutrientHint>
-
-              <TriviaHint
-                foodData={foodData}
-                count={count}
-                displayMode={displayMode}
-              ></TriviaHint>
-              <StepsHint
-                foodData={foodData}
-                count={count}
-                displayMode={displayMode}
-              ></StepsHint>
+              <div className="flex gap-20 pt-12 items-center">
+                <div className="flex flex-col gap-5">
+                  <div className="flex gap-5 items-center">
+                    <NutrientHint
+                      foodData={foodData}
+                      count={count}
+                      displayMode={displayMode}
+                    ></NutrientHint>
+                  </div>
+                  <TriviaHint
+                    foodData={foodData}
+                    count={count}
+                    displayMode={displayMode}
+                  ></TriviaHint>
+                </div>
+                <StepsHint
+                  foodData={foodData}
+                  count={count}
+                  displayMode={displayMode}
+                ></StepsHint>
+              </div>
             </div>
             <AnswerField
               foodData={foodData}
@@ -95,6 +95,13 @@ function MainPage({ displayMode }: MainPageProps) {
               answerCheck={answerCheck}
               setPlayLock={setPlayLock}
             />
+            <ScoreBoard
+              foodData={foodData}
+              count={count}
+              gameState={gameState}
+              displayMode={displayMode}
+              playLock={playLock}
+            ></ScoreBoard>
           </>
         )}
       </div>

@@ -26,8 +26,8 @@ const TriviaHint = ({ foodData, count, displayMode }: TriviaHintProps) => {
         <p
           key={index}
           className={`blurred-hint duration-300 ${
-            count <= 2
-              ? "blur-sm opacity-0 -translate-x-8"
+            count <= 1
+              ? "blur-sm select-none opacity-0 -translate-x-8"
               : "blur-none opacity-100 -translate-x-0"
           } ${displayMode ? "text-white" : "text-black"}`}
         >
