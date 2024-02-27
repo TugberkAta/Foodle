@@ -7,7 +7,7 @@ const PastFoodInfo = new Schema({
   foodStepsArray: [{ type: String, required: true }],
   foodTriviaArray: [{ type: String, required: true }],
   foodCalories: { type: String, required: true },
-  foodRegion: { type: String, required: true },
+  foodRegion: [{ type: String, required: true }],
   foodImg: { type: String, required: true },
   imgAlt: { type: String, required: true },
   date_of_food: { type: Date, required: true },

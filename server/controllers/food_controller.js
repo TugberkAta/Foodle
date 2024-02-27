@@ -42,13 +42,18 @@ exports.register_food_post = [
         .split(",")
         .map((string) => string.trim());
 
+      const foodRegionArray = req.body.foodRegion
+        .trim()
+        .split(",")
+        .map((string) => string.trim());
+
       const food = new Food({
         foodName: req.body.foodName,
         foodImg: req.body.foodImg,
         foodCalories: req.body.foodCalories,
         foodStepsArray: req.body.foodStepsArray,
         foodTriviaArray: req.body.foodTriviaArray,
-        foodRegion: req.body.foodRegion,
+        foodRegion: foodRegionArray,
         foodNutrient: foodNutrientArray,
         imgAlt: sanitizedImgAlt,
         date_of_food: DateTime.now(),
@@ -76,7 +81,7 @@ exports.all_foods_get = asyncHandler(async (req, res, next) => {
 
 // get the oldest not used before food
 exports.current_food_get = asyncHandler(async (req, res, next) => {
-  const currentFood = await Food.findOne().sort({ date_of_food: -1 }).exec();
+  const currentFood = await Food.findOne().sort({ date_of_food: 1 }).exec();
   res.send(currentFood);
 });
 
@@ -84,11 +89,9 @@ exports.current_food_get = asyncHandler(async (req, res, next) => {
 // current food saves it into past foods
 cron.schedule("0 0 * * *", async () => {
   (async function moveToNextDay() {
-    const allFoods = await Food.find().sort({ date_of_food: -1 }).exec();
+    const allFoods = await Food.find().sort({ date_of_food: 1 }).exec();
     if (allFoods.length > 1) {
-      const currentFood = await Food.findOne()
-        .sort({ date_of_food: -1 })
-        .exec();
+      const currentFood = await Food.findOne().sort({ date_of_food: 1 }).exec();
       try {
         const food = new PastFood({
           foodName: currentFood.foodName,
@@ -104,7 +107,7 @@ cron.schedule("0 0 * * *", async () => {
         const result = await food.save();
         if (result) {
           const deletedFood = await Food.findOneAndDelete()
-            .sort({ date_of_food: -1 })
+            .sort({ date_of_food: 1 })
             .exec();
         }
       } catch (err) {
