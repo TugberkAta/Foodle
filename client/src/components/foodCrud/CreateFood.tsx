@@ -80,10 +80,10 @@ const CreateFood = ({ displayMode, setDisplayMode }: CreateFoodProps) => {
                   setSuccess={setSuccess}
                 ></InputDefault>
                 <InputDefault
-                  id="wikiLink"
+                  id="foodRegion"
                   type="input"
-                  placeholder="Wikipedia link..."
-                  labelText="Wikipedia link"
+                  placeholder="Region..."
+                  labelText="Food Region"
                   setSuccess={setSuccess}
                 ></InputDefault>
                 <InputDefault
@@ -91,6 +91,13 @@ const CreateFood = ({ displayMode, setDisplayMode }: CreateFoodProps) => {
                   type="input"
                   placeholder="Nutrient Info..."
                   labelText="Nutrient Info"
+                  setSuccess={setSuccess}
+                ></InputDefault>
+                <InputDefault
+                  id="wikiLink"
+                  type="input"
+                  placeholder="Wikipedia link..."
+                  labelText="Wikipedia link"
                   setSuccess={setSuccess}
                 ></InputDefault>
               </div>

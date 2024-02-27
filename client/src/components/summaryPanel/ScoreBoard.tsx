@@ -1,3 +1,4 @@
+import Countdown from "../utilities/CountDown.tsx";
 import ScorePanel from "./ScorePanel.tsx";
 
 interface FoodData {
@@ -68,7 +69,9 @@ const ScoreBoard = ({
             </div>
           </div>
         </div>
-        <div></div>
+        <div>
+          <Countdown></Countdown>
+        </div>
       </div>
       <div className="fixed w-screen h-screen top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)]"></div>
     </>

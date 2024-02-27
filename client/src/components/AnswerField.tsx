@@ -81,7 +81,7 @@ const AnswerField = ({
         setGameState("won");
         setPlayLock(true);
         setAnimationTrigger(true);
-      } else if (count === 4) {
+      } else if (count === 5) {
         setGameState("lost");
         setPlayLock(true);
         setAnimationTrigger(true);

@@ -5,6 +5,8 @@ import TriviaHint from "./hintComponents/TriviaHint";
 import StepsHint from "./hintComponents/StepsHint";
 import NutrientHint from "./hintComponents/NutrientHint";
 import ScoreBoard from "./summaryPanel/ScoreBoard";
+import RegionHint from "./hintComponents/RegionHint";
+import WrongAnswerIcon from "./utilities/WrongAnswerIcon";
 
 interface FoodData {
   foodName: string;
@@ -16,6 +18,7 @@ interface FoodData {
   date_of_food: Date;
   wikiLink: string;
   foodNutrient: string[];
+  foodRegion: string[];
 }
 
 type MainPageProps = {
@@ -26,8 +29,37 @@ function MainPage({ displayMode }: MainPageProps) {
   const [count, setCount] = useState(0);
   const [gameState, setGameState] = useState("");
   const [foodData, setFoodData] = useState<FoodData | undefined>();
-  const [playLock, setPlayLock] = useState<boolean>(false);
   const [answerCheck, setAnswerCheck] = useState<boolean | string>();
+  const [playLock, setPlayLock] = useState<boolean>(() => {
+    // Attempt to read the playLock value from local storage
+    const savedPlayLock = localStorage.getItem("playLock");
+
+    // If there's a value stored, parse it to a boolean and return it
+    // Otherwise, default to false
+    return savedPlayLock ? JSON.parse(savedPlayLock) : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("playLock", playLock.toString());
+  }, [playLock]);
+
+  useEffect(() => {
+    if (foodData) {
+      localStorage.setItem("foodName", String(foodData.foodName));
+    }
+  }, [foodData]);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("foodName") != localStorage.getItem("foodNameOld")
+    ) {
+      setPlayLock(false);
+      localStorage.setItem(
+        "foodNameOld",
+        localStorage.getItem("foodName") || ""
+      );
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,9 +96,9 @@ function MainPage({ displayMode }: MainPageProps) {
           <>
             <div className="flex flex-col items-center">
               <PictureHint foodData={foodData} count={count}></PictureHint>
-              <div className="flex gap-20 pt-12 items-center">
-                <div className="flex flex-col gap-5">
-                  <div className="flex gap-5 items-center">
+              <div className="flex gap-20 pt-12 items-center ">
+                <div className="flex flex-col gap-5  justify-between h-full">
+                  <div className="flex gap-5 items-center ">
                     <NutrientHint
                       foodData={foodData}
                       count={count}
@@ -79,12 +111,41 @@ function MainPage({ displayMode }: MainPageProps) {
                     displayMode={displayMode}
                   ></TriviaHint>
                 </div>
-                <StepsHint
-                  foodData={foodData}
-                  count={count}
-                  displayMode={displayMode}
-                ></StepsHint>
+                <div className="flex flex-col h-full justify-between">
+                  <RegionHint
+                    foodData={foodData}
+                    count={count}
+                    displayMode={displayMode}
+                  ></RegionHint>
+                  <StepsHint
+                    foodData={foodData}
+                    count={count}
+                    displayMode={displayMode}
+                  ></StepsHint>
+                </div>
               </div>
+            </div>
+            <div className="flex">
+              <WrongAnswerIcon
+                count={count}
+                wrongAnswerRef={1}
+              ></WrongAnswerIcon>
+              <WrongAnswerIcon
+                count={count}
+                wrongAnswerRef={2}
+              ></WrongAnswerIcon>
+              <WrongAnswerIcon
+                count={count}
+                wrongAnswerRef={3}
+              ></WrongAnswerIcon>
+              <WrongAnswerIcon
+                count={count}
+                wrongAnswerRef={4}
+              ></WrongAnswerIcon>
+              <WrongAnswerIcon
+                count={count}
+                wrongAnswerRef={5}
+              ></WrongAnswerIcon>
             </div>
             <AnswerField
               foodData={foodData}
