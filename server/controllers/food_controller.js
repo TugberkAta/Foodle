@@ -1,17 +1,22 @@
 const asyncHandler = require("express-async-handler");
 const Food = require("../models/FoodInfo");
+const PastFood = require("../models/PastFoodInfo");
 const { body, validationResult } = require("express-validator");
 const { DateTime } = require("luxon");
+const cron = require("node-cron");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // Registering new food
 exports.register_food_post = [
   //Validating Data
   body("foodName", "Cannot be empty").isString().trim().notEmpty(),
   body("foodImg", "Cannot be empty").isString().trim().notEmpty(),
-  body("foodPrice", "Cannot be empty").isString().trim().notEmpty(),
   body("foodStepsArray", "Cannot be empty").isArray().notEmpty(),
-  body("foodTrivia", "Cannot be empty").isString().trim().notEmpty(),
+  body("foodTriviaArray", "Cannot be empty").isArray().notEmpty(),
   body("foodCalories", "Cannot be empty").isString().trim().notEmpty(),
+  body("foodNutrient", "Cannot be empty").isString().trim().notEmpty(),
+  body("imgAlt", "Cannot be empty").isString().trim().notEmpty(),
 
   asyncHandler(async (req, res, next) => {
     console.log(validationResult(req));
@@ -31,13 +36,18 @@ exports.register_food_post = [
         .toLowerCase()
         .replace(/\s+/g, "-");
 
+      const foodNutrientArray = req.body.foodNutrient
+        .trim()
+        .split(",")
+        .map((string) => string.trim());
+
       const food = new Food({
         foodName: req.body.foodName,
         foodImg: req.body.foodImg,
-        foodPrice: req.body.foodPrice,
+        foodCalories: req.body.foodCalories,
         foodStepsArray: req.body.foodStepsArray,
-        foodTrivia: req.body.foodTrivia,
-        foodCalories: foodCalories,
+        foodTriviaArray: req.body.foodTriviaArray,
+        foodNutrient: foodNutrientArray,
         imgAlt: sanitizedImgAlt,
         date_of_food: DateTime.now(),
       });
@@ -52,6 +62,51 @@ exports.register_food_post = [
 
 // get all saved foods
 exports.all_foods_get = asyncHandler(async (req, res, next) => {
-  const allFoods = await Article.find().sort({ date_of_food: -1 }).exec();
-  res.send(allFoods);
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, data) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      const allFoods = await Food.find().sort({ date_of_food: -1 }).exec();
+      res.send(allFoods);
+    }
+  });
+});
+
+// get the oldest not used before food
+exports.current_food_get = asyncHandler(async (req, res, next) => {
+  const currentFood = await Food.findOne().sort({ date_of_food: -1 }).exec();
+  res.send(currentFood);
+});
+
+// Schedule the cron job to run every day that removes
+// current food saves it into past foods
+cron.schedule("0 0 * * *", async () => {
+  (async function moveToNextDay() {
+    const allFoods = await Food.find().sort({ date_of_food: -1 }).exec();
+    if (allFoods.length > 1) {
+      const currentFood = await Food.findOne()
+        .sort({ date_of_food: -1 })
+        .exec();
+      try {
+        const food = new PastFood({
+          foodName: currentFood.foodName,
+          foodImg: currentFood.foodImg,
+          foodCalories: currentFood.foodCalories,
+          foodStepsArray: currentFood.foodStepsArray,
+          foodTriviaArray: currentFood.foodTriviaArray,
+          foodNutrient: currentFood.foodNutrientArray,
+          imgAlt: currentFood.sanitizedImgAlt,
+          date_of_food: currentFood.date_of_food,
+        });
+        const result = await food.save();
+        if (result) {
+          const deletedFood = await Food.findOneAndDelete()
+            .sort({ date_of_food: -1 })
+            .exec();
+        }
+      } catch (err) {
+        console.error("Error saving to past food:", err);
+      }
+    } else return;
+  })();
 });
