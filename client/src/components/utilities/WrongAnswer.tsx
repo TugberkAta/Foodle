@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
 
-type wrongAnswerIconProps = {
+type WrongAnswerIconProps = {
   count: number;
   wrongAnswerRef: number;
 };
 
-const WrongAnswerIcon = ({ count, wrongAnswerRef }: wrongAnswerIconProps) => {
+const WrongAnswerIcon = ({ count, wrongAnswerRef }: WrongAnswerIconProps) => {
   useEffect(() => {
     console.log(count >= wrongAnswerRef);
   }, [count, wrongAnswerRef]);

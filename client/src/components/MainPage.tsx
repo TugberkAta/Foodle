@@ -6,7 +6,7 @@ import StepsHint from "./hintComponents/StepsHint";
 import NutrientHint from "./hintComponents/NutrientHint";
 import ScoreBoard from "./summaryPanel/ScoreBoard";
 import RegionHint from "./hintComponents/RegionHint";
-import WrongAnswerIcon from "./utilities/WrongAnswerIcon";
+import WrongAnswerIcon from "./utilities/WrongAnswer";
 
 interface FoodData {
   foodName: string;
