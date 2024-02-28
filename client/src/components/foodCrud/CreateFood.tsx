@@ -23,7 +23,7 @@ const CreateFood = ({ displayMode, setDisplayMode }: CreateFoodProps) => {
     };
     try {
       console.log(formData);
-      const response = await fetch("http://localhost:3000/food/create", {
+      const response = await fetch("https://foodle.fun/api/food/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

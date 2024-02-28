@@ -79,10 +79,15 @@ exports.all_foods_get = asyncHandler(async (req, res, next) => {
   });
 });
 
-// get the oldest not used before food
+// Get the oldest not used before food
 exports.current_food_get = asyncHandler(async (req, res, next) => {
-  const currentFood = await Food.findOne().sort({ date_of_food: 1 }).exec();
-  res.send(currentFood);
+  try {
+    const currentFood = await Food.findOne().sort({ date_of_food: 1 }).exec();
+    res.send(currentFood);
+  } catch (err) {
+    console.error("Error fetching current food:", err);
+    res.status(500).send("Server Error");
+  }
 });
 
 // Schedule the cron job to run every day that removes

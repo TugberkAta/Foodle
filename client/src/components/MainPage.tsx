@@ -64,7 +64,7 @@ function MainPage({ displayMode }: MainPageProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/food/current", {
+        const response = await fetch("https://foodle.fun/api/food/current", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
