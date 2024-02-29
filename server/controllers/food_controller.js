@@ -101,7 +101,7 @@ cron.schedule("0 0 * * *", async () => {
           foodTriviaArray: currentFood.foodTriviaArray,
           foodNutrient: currentFood.foodNutrientArray,
           foodRegion: currentFood.foodRegion,
-          imgAlt: currentFood.sanitizedImgAlt,
+          imgAlt: currentFood.imgAlt,
           date_of_food: currentFood.date_of_food,
         });
         const result = await food.save();
