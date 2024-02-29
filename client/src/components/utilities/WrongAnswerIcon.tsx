@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
 
 type wrongAnswerIconProps = {
