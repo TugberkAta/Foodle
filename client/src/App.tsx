@@ -20,11 +20,13 @@ function App() {
           path="/"
           element={
             <>
-              <Header
-                displayMode={displayMode}
-                setDisplayMode={setDisplayMode}
-              ></Header>
-              <MainPage displayMode={displayMode}></MainPage>
+              <div>
+                <Header
+                  displayMode={displayMode}
+                  setDisplayMode={setDisplayMode}
+                ></Header>
+                <MainPage displayMode={displayMode}></MainPage>
+              </div>
             </>
           }
         />

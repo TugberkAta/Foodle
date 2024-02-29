@@ -7,9 +7,6 @@ type wrongAnswerIconProps = {
 };
 
 const WrongAnswerIcon = ({ count, wrongAnswerRef }: wrongAnswerIconProps) => {
-  useEffect(() => {
-    console.log(count >= wrongAnswerRef);
-  }, [count, wrongAnswerRef]);
   return (
     <RxCross2
       className={`size-6 ${

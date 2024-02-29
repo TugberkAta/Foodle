@@ -18,7 +18,7 @@ type NutrientHintProps = {
 
 const NutrientHint = ({ foodData, count, displayMode }: NutrientHintProps) => {
   return (
-    <div className=" w-fit">
+    <div className=" w-fit ">
       <h3 className="mb-1 mt-2 md:mt-0 font-light text-sm  text-gray-400">
         Nutrient
       </h3>

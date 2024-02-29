@@ -94,38 +94,32 @@ function MainPage({ displayMode }: MainPageProps) {
       >
         {foodData && (
           <>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center mt-12">
               <PictureHint foodData={foodData} count={count}></PictureHint>
-              <div className="flex gap-20 pt-12 items-center ">
-                <div className="flex flex-col gap-5  justify-between h-full">
-                  <div className="flex gap-5 items-center ">
-                    <NutrientHint
-                      foodData={foodData}
-                      count={count}
-                      displayMode={displayMode}
-                    ></NutrientHint>
-                  </div>
-                  <TriviaHint
-                    foodData={foodData}
-                    count={count}
-                    displayMode={displayMode}
-                  ></TriviaHint>
-                </div>
-                <div className="flex flex-col h-full justify-between">
-                  <RegionHint
-                    foodData={foodData}
-                    count={count}
-                    displayMode={displayMode}
-                  ></RegionHint>
-                  <StepsHint
-                    foodData={foodData}
-                    count={count}
-                    displayMode={displayMode}
-                  ></StepsHint>
-                </div>
+              <div className="grid md:grid-cols-2 md:grid-rows-2 grid-rows-4 gap-6 mt-8">
+                <NutrientHint
+                  foodData={foodData}
+                  count={count}
+                  displayMode={displayMode}
+                ></NutrientHint>
+                <RegionHint
+                  foodData={foodData}
+                  count={count}
+                  displayMode={displayMode}
+                ></RegionHint>
+                <TriviaHint
+                  foodData={foodData}
+                  count={count}
+                  displayMode={displayMode}
+                ></TriviaHint>
+                <StepsHint
+                  foodData={foodData}
+                  count={count}
+                  displayMode={displayMode}
+                ></StepsHint>
               </div>
             </div>
-            <div className="flex">
+            <div className="flex mt-5 mb-3">
               <WrongAnswerIcon
                 count={count}
                 wrongAnswerRef={1}
@@ -147,15 +141,17 @@ function MainPage({ displayMode }: MainPageProps) {
                 wrongAnswerRef={5}
               ></WrongAnswerIcon>
             </div>
-            <AnswerField
-              foodData={foodData}
-              count={count}
-              setGameState={setGameState}
-              setCount={setCount}
-              setAnswerCheck={setAnswerCheck}
-              answerCheck={answerCheck}
-              setPlayLock={setPlayLock}
-            />
+            <div className="mb-5">
+              <AnswerField
+                foodData={foodData}
+                count={count}
+                setGameState={setGameState}
+                setCount={setCount}
+                setAnswerCheck={setAnswerCheck}
+                answerCheck={answerCheck}
+                setPlayLock={setPlayLock}
+              />
+            </div>
             <ScoreBoard
               foodData={foodData}
               count={count}
