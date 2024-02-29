@@ -18,7 +18,7 @@ type PictureHintProps = {
 const PictureHint = ({ foodData, count }: PictureHintProps) => {
   return (
     <div
-      className={`md:w-96 w-10/12 mt-10 rounded-md border-2 border-gray-700 relative ${
+      className={`md:w-96 w-11/12 rounded-md border-2 border-gray-700 relative ${
         count < 5 ? "bg-gray-900" : "bg-none"
       }`}
     >

@@ -22,6 +22,9 @@ const ScorePanel = ({ count, gameState }: ScorePanelProps) => {
   const [score5, setScore5] = useState(
     parseInt(localStorage.getItem("score5") || "0")
   );
+  const [score6, setScore6] = useState(
+    parseInt(localStorage.getItem("score6") || "0")
+  );
   const [totalGamePlayed, setTotalGamePlayed] = useState(
     parseInt(localStorage.getItem("totalGamePlayed") || "0")
   );
@@ -44,7 +47,9 @@ const ScorePanel = ({ count, gameState }: ScorePanelProps) => {
         case 4:
           setScore5((prev) => prev + 1);
           break;
-
+        case 5:
+          setScore6((prev) => prev + 1);
+          break;
         default:
           break;
       }
@@ -53,10 +58,10 @@ const ScorePanel = ({ count, gameState }: ScorePanelProps) => {
 
   // Update total games played and save to local storage
   useEffect(() => {
-    const newTotal = score1 + score2 + score3 + score4 + score5;
+    const newTotal = score1 + score2 + score3 + score4 + score5 + score6;
     setTotalGamePlayed(newTotal);
     localStorage.setItem("totalGamePlayed", newTotal.toString());
-  }, [score1, score2, score3, score4, score5]);
+  }, [score1, score2, score3, score4, score5, score6]);
 
   // Save individual scores to local storage
   useEffect(() => {
@@ -74,6 +79,9 @@ const ScorePanel = ({ count, gameState }: ScorePanelProps) => {
   useEffect(() => {
     localStorage.setItem("score5", score5.toString());
   }, [score5]);
+  useEffect(() => {
+    localStorage.setItem("score6", score6.toString());
+  }, [score6]);
 
   const calculateProgression = (score: number) => {
     return totalGamePlayed > 0 ? (score * 100) / totalGamePlayed : 0;
@@ -109,6 +117,11 @@ const ScorePanel = ({ count, gameState }: ScorePanelProps) => {
           scoreProgression={calculateProgression(score5)}
           score={score5}
           index={5}
+        />
+        <ScoreBar
+          scoreProgression={calculateProgression(score6)}
+          score={score6}
+          index={6}
         />
       </div>
     </div>

@@ -19,7 +19,7 @@ type StepsHintProps = {
 const StepsHint = ({ foodData, count, displayMode }: StepsHintProps) => {
   return (
     <div>
-      <h3 className="mb-1 md:text-left text-center font-light text-sm  text-gray-400">
+      <h3 className="mb-1 text-left font-light text-sm  text-gray-400">
         Cooking Steps
       </h3>
       <ol>
